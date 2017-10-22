@@ -208,7 +208,19 @@ app.post('/login22999', function(req, res) {
 
 
 
+/*
+//https://shitapp01.herokuapp.com/#/app/login
+//https://shitapp01.herokuapp.com/auth/facebook/callback
 
+  -change callback:
+callbackURL: "https://shitapp01.herokuapp.com/auth/facebook/callback",
+
+Valid OAuth redirect URIs
+1)https://shitapp01.herokuapp.com/auth/facebook/callback
+2)App domains: shitapp01.herokuapp.com
+3)Site URL https://shitapp01.herokuapp.com
+
+*/
 
       /*---------- FACEBOOK LOGIN  --------------*/
 
@@ -232,8 +244,6 @@ app.post('/login22999', function(req, res) {
               clientID: '506464429730479', clientSecret: 'efb8d95e6fc6a9d733769efa994d23fd',
               callbackURL: "https://shitapp01.herokuapp.com/auth/facebook/callback",
               profileFields: ['id', 'displayName', 'link',  'photos', 'emails']
-//https://shitapp01.herokuapp.com/#/app/login
-//https://shitapp01.herokuapp.com/auth/facebook/callback
               },
               function(accessToken, refreshToken, profile, done) {
                   process.nextTick(function () {
@@ -336,6 +346,17 @@ app.post('/login22999', function(req, res) {
 <strong>token</strong>: <%= user.google.token %><br>
 <strong>email</strong>: <%= user.google.email %><br>
 <strong>name</strong>: <%= user.google.name %>
+
+
+-change callback:
+callbackURL: "https://shitapp01.herokuapp.com/auth/google/callback",
+
+Valid OAuth redirect URIs
+1)https://shitapp01.herokuapp.com/auth/google/callback
+2)App domains: shitapp01.herokuapp.com
+3)Site URL https://shitapp01.herokuapp.com
+
+
 */
 
 
@@ -343,7 +364,7 @@ app.post('/login22999', function(req, res) {
 
        clientID        : '901561854903-rb6dnoqj33a4mbi0p44st9cruhk99kpm.apps.googleusercontent.com',
        clientSecret    : '_DUwq_Md4uN1sPRKw1l-8uTZ',
-       callbackURL     : 'http://localhost:3000/auth/google/callback',
+       callbackURL     : 'https://shitapp01.herokuapp.com/auth/google/callback',
 
    },
    function(token, refreshToken, profile, done) {
@@ -459,6 +480,15 @@ http://192.168.1.115:3000/auth/twitter/callback
 var hostname = req.headers.host; // hostname = 'localhost:8080'
 var pathname = url.parse(req.url).pathname; // pathname = '/MyApp'
 console.log('http://' + hostname );
+
+  -change CallbackURL:
+callbackURL     : 'https://shitapp01.herokuapp.com/auth/twitter/callback'
+
+  ON TWITTER DEVELOPER:
+    https://apps.twitter.com/app/14357810/settings:
+1) Website:   https://shitapp01.herokuapp
+2)Callback URL:   https://shitapp01.herokuapp.com/auth/twitter/callback
+
 
 */
 
