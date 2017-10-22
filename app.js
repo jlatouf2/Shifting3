@@ -468,7 +468,7 @@ console.log('http://' + hostname );
 
            consumerKey     : 'KvZbc8GfpjmOU2AoQ81NPrc7U',
            consumerSecret  : 'k0N77FqvqSgEqlEnGkfQedpu7V0wKbRJa1BNfuInicmf4YkOqD',
-           callbackURL     : '`https://shitapp01.herokuapp.com/auth/twitter/callback`'
+           callbackURL     : 'https://shitapp01.herokuapp.com/auth/twitter/callback'
 //https://shitapp01.herokuapp.com/auth/facebook/callback
        },
        function(token, tokenSecret, profile, done) {
