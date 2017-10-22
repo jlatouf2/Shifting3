@@ -1,0 +1,62 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title bob3" style="font-size: 30px; text-align:center ">Storenames Information</h1>
+
+    <div class="buttons">
+      <button class="button button-clear" style="color:black;" ng-click="closestoremodal2()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+
+    <div >
+      <br><br>
+        <div class="bob3 " style="font-size: 25px; ">
+          Please either: <br><br>
+          1) Select a specified store from Table Row<br>
+          2) Create another store using Add Store Button <br>
+          3) Search for Store below  <br> <br>
+
+            <!--  THIS GETS THE LOCATION DATA:         -->
+            <!--    <p id="demo" style="font-weight: bold;"></p>   -->
+          <div id="results"></div> {{Coordinates}}
+          <button  ng-click="getCoordinatesButton();">GetLocation</button>
+
+        </div>
+        <br>
+        <div >
+          <table class="table">
+            <tbody>
+              <tr class="panel panel-default" style="width:100%">
+                <td>
+                  <div>
+                    <div>
+                      <input type="text" ng-model="storesearchName" placeholder="Storename" style="background-color:gainsboro; width:100%" class="form-control" id="usr">
+
+                    </div>
+                  </div>
+
+                </td>
+                <td style="width:100px">
+                      <button style="font-size:14px;margin-top:2px; height:32px" ng-click="searchStores();">Search</button>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+    </div>
+    <div>
+        <div style="font-size: 20px;   text-align:center ">
+          Press to Enter Delete Mode:  <br>
+          <button type="button" style="width:600px" ng-click="deleteMode()" data-dismiss="modal" class="btn btn-danger">Delete Mode</button> <br>
+        <span style="text">  Please Note: You can only delete Stores  that you created. </span>
+
+        </div>
+
+    </div>
+
+
+
+  </ion-content>
+</ion-modal-view>

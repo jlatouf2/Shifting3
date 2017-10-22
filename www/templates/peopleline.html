@@ -1,0 +1,210 @@
+<ion-view view-title="Peopleline">
+  <ion-content>
+
+
+
+      <!--<div style="padding-left:50px; padding-right:50px; ">  -->
+
+      <div style="color:white; text-align: center; background-color: #4881ea; vertical-align: middle;
+        line-height: 50px;   font-size: 15px;" >
+        <span style="margin-left:50px"> </span>
+        <span  style="">Peopleline Controller </span>
+        <button type="button" class="btn btn-default" ng-click="openpeoplemodal1()" style="line-height: 20px;
+         background-color: #4881ea;  border-style: none; float: right; font-size: 25px; margin-top:5px; margin-right:10px">
+          <span style="color:white" class="glyphicon glyphicon-plus"></span>
+        </button>
+      </div>
+
+
+            <!-- OPTIONS  MODAL BEGINS
+
+      <div class="modal fade" id="optionsModa22" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class=" bob3" style="font-size: 30px; text-align:center ">PeopleLine Information</h1>
+                    This page shows the people available in this line.
+
+              </div>
+            <div class="modal-body">
+              <div class="bob3 item item-text-wrap" style="font-size: 25px; ">
+                Please either: <br>
+                1) Select a Person  <br>
+                2) Create another line
+              </div>
+            </div>
+            <div class="modal-footer">
+                <div style="font-size: 20px;   text-align:left ">
+                  Press to Enter Delete Mode:  <br>
+                  <button type="button" style="width:100%" ng-click="deleteMode()" data-dismiss="modal" class="btn btn-danger">Delete Mode</button> <br>
+                  Please Note: You only have authority to
+                  delete Stores from rows that you created.
+
+                </div>
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+-->
+
+            <!-- Add Yourself  MODAL BEGINS
+
+      <div class="modal fade" id="AddYourselfModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class=" bob3" style="font-size: 30px; text-align:center ">Add Yourself to Lineup {{grabLineNumber || 'Linenumber!'}}</h1>
+                    REFER TO THE INFORMATION BELOW .
+
+              </div>
+            <div class="modal-body">
+              <div class="bob3 item item-text-wrap" style="font-size: 25px; ">
+                Please either: <br>
+                  {{fullName || "Full Name"}} {{userdata.facebook.name}}<br>
+                Email: {{useremail || "User Email"}}<br>
+                ID: {{userid || "User ID"}}<br>
+                Token: {{usertoken || "User Token"}}<br>
+
+                <p id="demo2" style="font-weight: bold;"></p>
+                Displacement: {{finalCalc}}
+
+              </div>
+            </div>
+            <div class="modal-footer">
+                <div style="font-size: 20px;   text-align:center ">
+                  Press to Add to Table:  <br>
+                  <button type="button" style="width:400px" ng-click="addPeopletoDB()" data-dismiss="modal" class="btn btn-primary">Add Data</button> <br>
+
+                </div>
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      -->
+      <p ng-show="blue" id="demo2" style="font-weight: bold;"></p>
+
+
+            <!-- TITLE / INFORMATION ! -->
+
+        <h1 class="bob3" style="text-align:center;">PeopleLine Controller2 </h1>
+
+        <h1 class="bob3" style="text-align:center;">Store : {{grabStorename}} <span style="margin-left:50px;"> Lines #: {{grabLineNumber}} <span></h1>
+
+        <!--  <div class="bob3" style="font-size:30px;text-align:center;">Lines #: {{grabLineNumber || 'Line not passed!'}} </div>    -->
+
+        <!-- Add Yourself Text ! -->
+
+      <div style="padding-left:50px; padding-right:50px">
+          <h4 style="text-align:center">Please press this button to add Yourself to Lineup:</h4>
+
+              <!-- ADD YOURSELF BUTTON! -->
+          <div>
+            <button class="btn btn-default btn"  ng-click="openpeoplemodal2()">Add Yourself</button>
+
+          <!--  <button class="btn btn-default btn"  ng-click="distanceCalc()">Distance</button>
+            <button class="btn btn-default btn"  ng-click="getStoreCords()">Store Coordinates</button>
+            <button class="btn btn-default btn"  ng-click="distanceCalc2()">FINAL CALC:</button> -->
+
+            <li>  The Line's Coordinates are:  </li>
+          <!--  <li ng-repeat="place in places">{{place.latitude}} <br> {{place.longitude}}</li> -->
+            {{finalCalc}}
+            <li>  FINAL CALCULATION:  </li>
+            <li ng-show="showfinalCalc">{{finalCalc}}</li>
+
+          </div>
+
+          <br>
+      </div>
+
+        <!-- LOCATION COORDINATES! -->
+
+      <!--    <div class="row" style="padding-left:50px; padding-right:50px">
+                <div class="col-sm-12">
+                  <h3>Your Coordinates:</h3>
+                  <button ng-click="location()">Location Data:</button> <br>
+                  <p id="demo" style="font-weight: bold;"></p>
+                </div>
+            </div>
+      -->
+
+        <!-- DELETE ALERT  -->
+
+
+        <button ng-show="deleteButton" style="width:100%; height:50px; opacity: 0.5; text-align:center" ng-click="exitDeleteMode()" type="button" class="btn btn-danger">
+          DELETE MODE!<BR> PLESE PRESS ME TO EXIT!</button>
+
+
+            <!-- POSITION / DISPLACEMNT BUTTONS! -->
+        <div  style="padding-left:50px; padding-right:50px">
+          <button class="btn btn-default btn"  ng-click="positionButton()">POSITION</button>
+          <button style="float:right" class="btn btn-default btn"  ng-click="displacementButton()">DISPLACEMENT</button>
+        </div>
+
+
+
+            <!-- TABLE BEGINS! -->
+        <div style="margin-bottom:30px">
+            <div class="row">
+
+            </div>
+        				<div class="row">
+      					<div class="table-responsive">
+      						<table class="table table-hover">
+        							<thead>
+          								<tr>
+          									<th style="text-align: center;">Name</th>
+          								</tr>
+        							</thead>
+        							<tbody>
+
+          								<tr ng-hide="numberLinesZero" style="text-align: ;"  ng-repeat="person in people | filter:search | orderBy:'person.created'" >
+          									<td> <a style="background-color:white; border:none; " href="/#/profile2" ng-click="checkPeopleFcn(person.local.email)" class="list-group-item active ">
+                              <div>
+                                <img ng-show= "imageSaved" class="img-circle" style="display:block; float: left;  border-style: dotted; " src="{{black2}}" >
+                                <img ng-hide="imageSaved" class="img-circle" style="display:block; weight:50px; height:50px; float: left; border-style: dotted; " src="img/images-3.jpeg" >
+
+                                <span style="color:black;  ">{{person.email}} <br> Position:{{$index+1}} </span>
+                              </div>    <!-- Need to store userid in DB then get all from DB and put in:
+                                 {{"http://graph.facebook.com/" +person.iduserid+ "/picture?type=square"}} +    -->
+                            </td>
+
+                            <td style="width:80px;"  ng-show="deleteButton">
+                              <button class="btn btn-danger btn" style="float:right;  height:40px;  margin-top:10px" ng-click="deletePeople2(person.email)">Delete</button>
+                            </td>
+          								</tr>
+
+                          <tr ng-show="numberLinesZero" style="text-align: left;"  ng-repeat="person in people | filter:search | orderBy:'person.distance'" >
+          									<td > <a style="background-color:white; border:none; text-align: left" href="/#/profile2" ng-click="checkPeopleFcn(person.local.email)" class="list-group-item active ">
+                              <span  class="glyphicon glyphicon-home" style="color:black;"></span> <span style="color:black;">
+                              Person:    {{person.email}} <br>
+                              Distance:  {{person.distance}}<br>
+
+                              Position:   {{$index+1}} </span>
+                            <!--      <button class="btn btn-danger btn-xs" style="float: right; " ng-click="removeName($index)">Delete</button> -->
+
+                            </td>
+
+
+                            <td  style="width:80px"  ng-show="deleteButton">
+                              <button class="btn btn-danger btn" style="float:right;  margin-top:5px" ng-click="deletePeople2(person.email)">Delete</button>
+                            </td>
+          								</tr>
+
+
+        							</tbody>
+      						</table>
+      					</div>
+      				</div>
+          </div>
+
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

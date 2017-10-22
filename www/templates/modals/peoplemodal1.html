@@ -1,0 +1,31 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title bob3" style="font-size: 30px; text-align:center "> PeopleLine Information </h1>
+    <div class="buttons">
+      <button class="button button-clear" style="color:black;" ng-click="closepeoplemodal1()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+      This page shows the people available in this line.
+
+      <div >
+        <div class="bob3 item item-text-wrap" style="font-size: 25px; ">
+          Please either: <br>
+          1) Add Yourself to line  <br>
+          2) Select a Person
+        </div>
+      </div>
+      <div>
+          <div style="font-size: 20px;   text-align:left ">
+            Press to Enter Delete Mode:  <br>
+            <button type="button" style="width:100%" ng-click="deleteMode()" data-dismiss="modal" class="btn btn-danger">Delete Mode</button> <br>
+            Please Note: You only have authority to
+            delete Stores from rows that you created.
+
+          </div>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+
+  </ion-content>
+</ion-modal-view>

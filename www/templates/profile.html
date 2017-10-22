@@ -1,0 +1,32 @@
+<ion-view view-title="Profile">
+  <ion-content>
+
+
+    <img ng-hide="imageSaved" class="img-circle" style=" margin-left: auto; margin-right: auto;
+    display: block;" src="img/images-3.jpeg" >
+    <img ng-show= "imageSaved" class="img-circle" style="margin-left: auto; margin-right: auto;
+    display: block; " src="{{black2}}" >
+
+
+<div class="row">
+  <div class="col-*-*"></div>
+    <div >
+      <!--   http://graph.facebook.com/" +profile.id+ "/picture?type=square
+          <div class="bob3" style="width:500px; margin: 0 auto; text-align: center;" class="card">   <br>
+            <div style="font-size: 25px; border-style: solid;border-color:white;background-color:	 #4881ea; " class="item item-divider">
+            Freeing Your Time, One Spot at a Time
+            </div>
+          </div>
+      -->
+    </div>
+</div>
+
+
+<h1 class="bob3" style="text-align:center;">{{userdata.facebook.name || "Profile Name"}} </h1>
+<h1 class="bob3" style="text-align:center;">{{fullName || "Full Name"}} </h1>
+<h1 class="bob3" style="text-align:center;"> Email: {{useremail || "User Email"}} </h1>
+<h1 class="bob3" style="text-align:center;"> ID: {{userid || "User ID"}} </h1>
+<h1 class="bob3" style="text-align:center;"> Token: {{usertoken || "User Token"}} </h1>
+
+</ion-content>
+</ion-view>

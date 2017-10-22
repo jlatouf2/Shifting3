@@ -1,0 +1,25 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title bob3" style="font-size: 30px; text-align:center "> Storeline Information </h1>
+    <div class="buttons">
+      <button class="button button-clear" style="color:black;" ng-click="closelinemodal1()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div style="font-size:20px; padding:20px; ">
+    This page shows the lines that you can add to this store: {{grabStorename || "Storename not passed!"}}.
+    </div>
+    <div class="bob3" style="font-size:25px; padding:20px; ">
+      Please either: <br><br>
+      1) Select a line  <br><br>
+      2) Create another line
+    </div>
+    <div style="font-size: 20px;   text-align:center ">
+      Press to Enter Delete Mode:  <br>
+      <button type="button" style="width:100%" ng-click="deleteMode()"
+      data-dismiss="modal" class="btn btn-danger">Delete Mode</button> <br>
+      Please Note: You can only
+      delete Stores from rows that you created.
+    </div>
+  </ion-content>
+</ion-modal-view>

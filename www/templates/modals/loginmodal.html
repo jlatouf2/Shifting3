@@ -1,0 +1,27 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title bob3" style="font-size: 30px; text-align:center ">
+      <span style="text-align:center;">Login </span></h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin1()" style="color:black;">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form >
+      <div class="list bob3" >
+        <label class="item item-input">
+          <span class="input-label" style="font-size:30px">Email: </span>
+          <input type="text" style="font-size:20px" ng-model="email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label" style="font-size:30px">Password:</span>
+          <input type="password" style="font-size:20px" ng-model="password">
+
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" menu-close href="#/app/storenames" ng-click="ServiceFunction5()" >Log in</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

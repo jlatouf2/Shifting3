@@ -1,0 +1,228 @@
+<ion-view view-title="Storenames">
+  <ion-content>
+
+    <!-- HEADER -->
+<div style="color:white; text-align: center; background-color: #4881ea; vertical-align: middle;
+line-height: 50px;   font-size: 15px;" >
+<span style="margin-left:50px"> </span>
+<span  style="">Stores Available </span>
+<button type="button" class="btn btn-default" ng-click="openstoremodal2()" style="line-height: 20px;
+background-color: #4881ea;  border-style: none; float: right; font-size: 25px; margin-top:5px; margin-right:10px">
+<span style="color:white" class="glyphicon glyphicon-plus"></span>
+</button>
+</div>
+
+
+
+      <!-- TITLE -->
+<h1 class="bob3" style="text-align:center;">Stores Available in Area</h1>
+
+
+
+      <!-- OPTIONS MODALs BEGINS
+<div class="modal fade" id="optionsModal" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h1 class=" bob3" style="font-size: 30px; text-align:center ">Storenames Information</h1>
+      This page will use your coordinates to determine if their are store nearby that
+      are also using Shift. <br>
+  </div>
+<div class="modal-body">
+    <div class="bob3 " style="font-size: 25px; ">
+      Please either: <br>
+      1) Select a specified store from Table Row<br>
+      2) Create another store using Add Store Button <br>
+      3) Search for Store below  <br> <br>
+
+      <div id="results"></div> {{Coordinates}}
+      <button  ng-click="getCoordinatesButton();">GetLocation</button>
+
+    </div>
+
+    <div >
+      <table class="table">
+        <tbody>
+          <tr class="panel panel-default" style="width:100%">
+            <td>
+              <div>
+                <div>
+                  <input type="text" ng-model="storesearchName" placeholder="Storename" style="background-color:gainsboro; width:100%" class="form-control" id="usr">
+
+                </div>
+              </div>
+
+            </td>
+            <td style="width:100px">
+                  <button style="font-size:14px;margin-top:2px; height:32px" ng-click="searchStores();">Search</button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <div style="font-size: 20px;   text-align:left ">
+      Press to Enter Delete Mode:  <br>
+      <button type="button" style="width:100%" ng-click="deleteMode()" data-dismiss="modal" class="btn btn-danger">Delete Mode</button> <br>
+      Please Note: You only have authority to delete Stores  that you created.
+
+    </div>
+
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+-->
+
+
+    <!--  MODALs BEGINS
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h1 class=" bob3" style="font-size: 30px; text-align:center ">Storenames Information</h1>
+
+        This page will use your postal code to determine if their are store nearby that
+        are also using Shift. <br>
+    </div>
+  <div class="modal-body">
+      <div class="bob3 " style="font-size: 25px; ">
+        Please either: <br>
+        1) Select a specified store  <br>
+        2) Create another store  <br>
+        3) Search for Store Using Help menu icon (+)  at top right  <br>
+
+      </div>
+  </div>
+  <div class="modal-footer">
+      <span style="font-size: 20px;  ">   *Press and hold row to delete. </span>
+
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>
+</div>
+</div>
+-->
+
+
+<br>
+
+<p>Toggle value 1 is: <b>{{toggleModel.value1}}</b></p>
+
+<!--  ADD STORE  TEXTAREA & BUTTON!-->
+
+<div>
+<table class="table">
+<tbody>
+<tr class="panel panel-default" style="width:100%">
+  <td>
+    <div>
+      <div >
+        <input type="text" ng-model="storeName.sname" placeholder="Storename" style="background-color:gainsboro; width:100%" class="form-control" id="usr">
+
+      </div>
+    </div>
+{{storeName.sname}}
+  </td>
+  <td style="width:100px">
+        <button style="font-size:14px;margin-top:2px; height:32px" class="btn btn-primary" ng-click="addStore1();">Add Store</button>
+
+  </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!--
+
+<div class="list">
+
+  <div class="item item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="Email">
+    </label>
+    <button class="button button-small">
+      Submit
+    </button>
+  </div>
+
+</div>
+
+-->
+
+
+
+<!--  COORDINATES INFORMATION!-->
+<!--
+<div style="padding-left:50px; padding-right:50px">
+<div class="row">
+      <div class="col-sm-12">
+          <h3>Your Coordinates.</h3>
+  THIS IS COMMENTED OUT ==   <input type="button" class="button" id="go" value="Click Me and I'll Guess Your Postal Code!">
+         <div id="results"></div>
+          <button ng-click="getLocation()">Try It</button>
+         <p id="demo" style="font-weight: bold;"></p>
+    THIS IS COMMENTED OUT ==    <button ng-click="getStores()">GetStoreNames</button
+    </div>
+</div>
+</div>
+-->
+
+<!-- DELETE BUTTON -->
+<button ng-show="deleteButton" style="width:100%; height:50px; opacity: 0.5;
+ text-align:center" ng-click="exitDeleteMode()" type="button" class="btn btn-danger">
+  DELETE MODE!<BR> PLESE PRESS ME TO EXIT!
+</button>
+
+<!-- SUCCESS BUTTON -->
+
+<div ng-show="successful" class="alert alert-success">
+  <strong>Success!</strong> Indicates a successful or positive action.
+</div>
+
+
+  <!-- STORENAMES TABLE -->
+
+<div style="" class="table-responsive">
+<table class="table  table-hover">
+  <thead>
+      <tr >
+        <!--			<th style="text-align: center;">Store</th> -->
+        <!--		<th style="text-align: center;">Actions</th> -->
+      </tr>
+  </thead>
+      <tbody style="background-color:white; border:none">
+            <tr ng-hide="numberLinesZero" style="text-align: center;" ng-repeat="country in countries | filter:search | orderBy:'store'">
+                <td>
+                  <a  style="background-color:white; border:none"  href="#/app/storelines"   ng-click="grabStuff(country.store)" class="list-group-item active">
+                  <span style="color:black;font-weight: bold;">{{country.store}} <br> {{country.postal}}
+                </td>
+
+                <td  style="width:80px"  ng-show="deleteButton">
+                  <button class="btn btn-danger btn" style="float:right; margin-top:5px" ng-click="deleteName2(country.store)">Delete</button>
+                </td>
+            </tr>
+
+            <tr ng-show="numberLinesZero" >
+                <td><a style="background-color:white; border:none; text-align: center;" href=""class="list-group-item active" >
+                    <span style="color:black;">PLEASE WAIT UNTIL THE GEOLOCATION UPDATES <br>
+                      THE PAGE OR ADD STORE YOURSELF  </span>
+                </td>
+                <td  style="width:80px"  ng-show="deleteButton">
+                  <button class="btn btn-danger btn" style="float:right; margin-top:5px" ng-click="deleteLine(country.line)">Delete</button>
+                </td>
+            </tr>
+
+      </tbody>
+</table>
+</div>
+
+
+  </ion-content>
+</ion-view>

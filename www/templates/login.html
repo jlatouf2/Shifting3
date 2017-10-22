@@ -1,0 +1,23 @@
+<ion-view view-title="Browse">
+  <ion-content>
+
+<br><br>
+<div class="form-group row">
+  <div class="col-xs-3">
+      <label for="ex1">Email: jarredl</label>
+      <input class="form-control" id="ex1"   ng-model="firstname" type="text">
+  </div>
+  <div class="col-xs-3">
+      <label for="ex2">Password: paassword2</label>
+      <input class="form-control" id="ex2"   ng-model="lastname" type="text">
+  </div>
+  <div class="col-xs-4">
+      <button style="margin-top:30px" ng-click="ServiceFunction2()" > Login</button>
+  </div>
+</div>
+<button ng-click="fbPass()">Press Me.</button>
+<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+<a href="/auth/google" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+<a href="/auth/twitter" class="btn btn-info"><span class="fa fa-twitter"></span> Twitter</a>
+</ion-content>
+</ion-view>
