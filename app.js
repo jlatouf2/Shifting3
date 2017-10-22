@@ -52,8 +52,10 @@ require('./www/routes/routes.js')(app, passport);
 var mongoose = require('mongoose');
 
 // 2) CONNECT MONGOOSE
- mongoose.connect('mongodb://localhost/myappANG' , { useMongoClient: true });
+ //mongoose.connect('mongodb://localhost/myappANG' , { useMongoClient: true });
  //mongoose.connect("mongodb://john:john1@ds013891.mlab.com:13891/white");
+
+mongoose.connect("mongodb://john:john1@ds227565.mlab.com:27565/teal");
 
 // 3) SIMPLE CHECK TO SEE IF CONNECTED TO DB
 var db = mongoose.connection;
@@ -231,6 +233,7 @@ app.post('/login22999', function(req, res) {
               callbackURL: "https://shitapp01.herokuapp.com/auth/facebook/callback",
               profileFields: ['id', 'displayName', 'link',  'photos', 'emails']
 //https://shitapp01.herokuapp.com/#/app/login
+//https://shitapp01.herokuapp.com/auth/facebook/callback
               },
               function(accessToken, refreshToken, profile, done) {
                   process.nextTick(function () {
