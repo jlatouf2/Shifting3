@@ -228,7 +228,7 @@ app.post('/login22999', function(req, res) {
         });
         passport.use(new FacebookStrategy({
               clientID: '506464429730479', clientSecret: 'efb8d95e6fc6a9d733769efa994d23fd',
-              callbackURL: "/auth/facebook/callback",
+              callbackURL: "https://shitapp01.herokuapp.com/auth/facebook/callback",
               profileFields: ['id', 'displayName', 'link',  'photos', 'emails']
 //https://shitapp01.herokuapp.com/#/app/login
               },
