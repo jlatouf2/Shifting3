@@ -64,6 +64,25 @@ console.log('worked');
         console.log(currentLocation);
 
 
+        //THIS IS HOW YOU EMIT WITH CALLBACK
+        $scope.emitACK = function () {
+        					console.log('socket1');
+            socket.emit('echo-ack', $scope.dataToSend, function (data) {
+        console.log("This is data: "+data);
+            //    $scope.serverResponseACK = data;
+            });
+            $scope.dataToSend = '';
+        };
+
+        //CALLBACK WORKS
+        $scope.ferretblock = function() {
+          socket.emit('ferret', 'black',function (data) {
+              console.log(data);
+              console.log('ldskjflsd'); // data will be 'woot'
+              $scope.blue = data;
+          });
+      };
+
 
 
         // Template for Modal
@@ -184,6 +203,14 @@ console.log('worked');
 
 .controller('storeNamesCtrl', function($scope, $location, $http, $timeout, $rootScope, $ionicModal, AuthService) {
 
+  $scope.facebookLogin = function() {
+      $cordovaOauth.facebook("506464429730479", ["email"])
+      .then(function(result) {
+          // results
+      }, function(error) {
+          // error
+      });
+    }
 
           /*
           AIzaSyALwS3F_V2K6Oq1q8v5-9zxUHfrvfknTEM
@@ -251,6 +278,12 @@ console.log('worked');
           $scope.modal2.show();
           },0)
 
+          $http.post('http://localhost:3000/storeName', {postal: $scope.postal }).success(function( data)
+               {
+                 $scope.numberLinesZero = false;
+                 console.log("Data is returned: " + data);
+                 $scope.countries = data;
+               }, function(posts) {});
 
 
 

@@ -1,5 +1,8 @@
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 var path = require('path');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -92,6 +95,40 @@ var userSchema = new Schema({
 // the schema is useless so far
 // we need to create a model using it
 var Usertwo = mongoose.model('Usertwo', userSchema);
+
+
+
+
+
+io.on('connection', function(socket){
+     io.sockets.emit('broadcast',{ description:' clients connected!'});
+     socket.on('clientEvent', function () {     console.log('socket worked!')   });
+
+    socket.on('passInfo', function () {
+            console.log('this worked!')
+    socket.emit('passInfoBack', { description: 'A custom event named testerEvent!'});
+      });
+
+
+
+      socket.on('ferret', function (data, callback) {
+        console.log('data passed');
+        console.log(data);
+        callback('DATA PASSED BACK')
+      //  io.emit('echo3', data);
+      });
+
+        socket.on('echo-ack', function (data, callback) {
+          console.log('wokrekdldkjf');
+        //  var data = 'black';
+                  //  callback(data);
+                   io.emit('acho-ack', data);
+                });
+
+});
+
+
+
 
 //curl -X POST  http://localhost:3000/signup22
 //curl -X POST -H 'Content-Type: application/json' -d '{"fname":"davidwalshr","lname":"davidwalshr","email":"davidwalshr","password":"fsomethingt", "passwordConf": "fsomethingt"}' http://localhost:3000/signup22
@@ -242,7 +279,7 @@ Valid OAuth redirect URIs
         });
         passport.use(new FacebookStrategy({
               clientID: '506464429730479', clientSecret: 'efb8d95e6fc6a9d733769efa994d23fd',
-              callbackURL: "https://shitapp01.herokuapp.com/auth/facebook/callback",
+              callbackURL: "http://localhost:3000/auth/facebook/callback",
               profileFields: ['id', 'displayName', 'link',  'photos', 'emails']
               },
               function(accessToken, refreshToken, profile, done) {
@@ -364,7 +401,7 @@ Valid OAuth redirect URIs
 
        clientID        : '901561854903-rb6dnoqj33a4mbi0p44st9cruhk99kpm.apps.googleusercontent.com',
        clientSecret    : '_DUwq_Md4uN1sPRKw1l-8uTZ',
-       callbackURL     : 'https://shitapp01.herokuapp.com/auth/google/callback',
+       callbackURL     : 'http://localhost:3000/auth/google/callback',
 
    },
    function(token, refreshToken, profile, done) {
@@ -498,7 +535,7 @@ callbackURL     : 'https://shitapp01.herokuapp.com/auth/twitter/callback'
 
            consumerKey     : 'KvZbc8GfpjmOU2AoQ81NPrc7U',
            consumerSecret  : 'k0N77FqvqSgEqlEnGkfQedpu7V0wKbRJa1BNfuInicmf4YkOqD',
-           callbackURL     : 'https://shitapp01.herokuapp.com/auth/twitter/callback'
+           callbackURL     : 'http://localhost:3000/auth/twitter/callback'
 //https://shitapp01.herokuapp.com/auth/facebook/callback
        },
        function(token, tokenSecret, profile, done) {
@@ -805,6 +842,12 @@ app.get('/', function(req, res) {
 
 app.set('port', (process.env.PORT || 3000));
 
+/*
 app.listen(app.get('port'), function () {
+  console.log('Example app listening on port 3000!');
+});
+*/
+
+http.listen(app.get('port'), function () {
   console.log('Example app listening on port 3000!');
 });
