@@ -278,7 +278,7 @@ console.log('worked');
           $scope.modal2.show();
           },0)
 
-          $http.post('http://localhost:3000/storeName', {postal: $scope.postal }).success(function( data)
+          $http.post('http://192.168.1.115:3000/storeName', {postal: $scope.postal }).success(function( data)
                {
                  $scope.numberLinesZero = false;
                  console.log("Data is returned: " + data);
@@ -700,6 +700,34 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
   $scope.openlinemodal2 = function() {
     $scope.modal5.show();
   };
+
+
+  var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+
+
+  // onSuccess Callback
+  //   This method accepts a `Position` object, which contains
+  //   the current GPS coordinates
+  //
+  function onSuccess(position) {
+    console.log(position.coords.latitude);
+
+      var element = document.getElementById('geolocation');
+      element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
+                          'Longitude: ' + position.coords.longitude     + '<br />' +
+                          '<hr />'      + element.innerHTML;
+  }
+
+  // onError Callback receives a PositionError object
+  //
+  function onError(error) {
+      alert('code: '    + error.code    + '\n' +
+            'message: ' + error.message + '\n');
+  }
+
+  // Options: throw an error if no update is received every 30 seconds.
+  //
+
 
 
 

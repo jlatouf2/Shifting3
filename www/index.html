@@ -65,6 +65,11 @@
     <script src="js/services.js"></script>
     <script>
 
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        console.log("navigator.geolocation works well");
+    }
+
     function goBack() {   window.history.back();   }
 
     //SOCKET.IO FUNCTIONS:
