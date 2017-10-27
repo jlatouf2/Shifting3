@@ -102,31 +102,288 @@ var Usertwo = mongoose.model('Usertwo', userSchema);
 
 io.on('connection', function(socket){
      io.sockets.emit('broadcast',{ description:' clients connected!'});
+
      socket.on('clientEvent', function () {     console.log('socket worked!')   });
 
-    socket.on('passInfo', function () {
-            console.log('this worked!')
-    socket.emit('passInfoBack', { description: 'A custom event named testerEvent!'});
+      socket.on('passInfo', function () {   console.log('this worked!')
+  //  socket.emit('passInfoBack', { description: 'A custom event named testerEvent!'});
       });
 
 
 
       socket.on('ferret', function (data, callback) {
-        console.log('data passed');
         console.log(data);
         callback('DATA PASSED BACK')
       //  io.emit('echo3', data);
       });
 
-        socket.on('echo-ack', function (data, callback) {
-          console.log('wokrekdldkjf');
-        //  var data = 'black';
-                  //  callback(data);
-                   io.emit('acho-ack', data);
-                });
+      socket.on('echo-ack', function (data, callback) {
+        console.log('wokrekdldkjf');
+                //  callback(data);
+                 io.emit('acho-ack', data);
+        });
+
+      socket.on('storeName', function (data, callback) {
+        console.log('data passed'); console.log(data);
+          Store.find( {postal: data.postal})
+            .exec(function(err, posts) {
+              if (err) { return next(err) }
+                  callback(posts);
+                  console.log(posts );
+            })
+          //  io.emit('echo3', data);
+      });
+
+      socket.on('storenameSearch', function (data, callback) {
+             console.log(data);
+              Store.find( {store: data.store})
+              .exec(function(err, posts) {
+              if (err) { return next(err) }
+                  callback(posts);
+                  console.log(posts );
+            })
+      });
+
+      socket.on('addStore', function (data, callback) {
+        console.log(data);
+        console.log(data.store);
+        console.log(data.latitude);
+
+
+        var store = new Store({
+          store: data.store,  postal: data.postal,
+          latitude: data.latitude, longitude: data.longitude,
+          Adminpassword: data.Adminpassword  })
+
+          store.save(function (err, post) {
+            if (err) { return next(err) }
+           callback(post);
+           console.log(post);
+          })
+
+      });
+
+      socket.on('deleteselectedStore', function (data, callback) {
+         console.log(data);
+         Store.remove({store: data.store}, function(err,removed) {
+             Store.find().exec(function(err, posts) {
+               if (err) { return next(err) }
+                    console.log(posts);
+               callback(posts);
+             })
+         });
+      });
+
+      socket.on('deleteStore44', function (data, callback) {
+         console.log(data);
+         Store.remove({store: data.store}, function(err,removed) {
+             Store.find().exec(function(err, posts) {
+               if (err) { return next(err) }
+                  console.log(posts);
+               callback(posts);
+             })
+         });
+      });
+
+
+      socket.on('numberofLines', function (data, callback) {
+         console.log(data);
+         Storeline.find({store: data.store}, function( err, count){
+             console.log( "Number of users:", count );
+              callback(count);
+           })
+      });
+
+      socket.on('addLine1', function (data, callback) {
+        console.log(data);
+        console.log("number sent to DB: " + data.line);
+        console.log("token: " + data.Adminpassword);
+
+              Storeline.count({ $and: [{store: data.store}, {line: data.line}]}   )
+                .exec(function(err, count) {
+                    if (err) { return next(err) }
+
+                 console.log( "Number of users:", count );
+                if (count == 1) {
+                  console.log('fcn ended b/c its in table');
+              } else {
+
+                  var storeline = new Storeline({
+                  store: data.store, line: data.line,
+                  Adminpassword: data.Adminpassword   })
+
+                  storeline.save(function (err, post) {
+                    if (err) { return next(err) }
+                  //  res.send(post)
+                  callback(post);
+
+              })
+            }
+        })
+      })
+
+
+      socket.on('addLine1', function (data, callback) {
+        var bob = data.store;    var bob2 = data.Adminpassword;
+        console.log("Store: "+ bob);  console.log("Admin: "+ bob2);
+
+        if(bob2 !== undefined) {
+        //  Store.find( {store: req.body.store}).where({Adminpassword: bob})
+        //  THIS WORKS, ITS JUST THAT WHEN YOU DONT HAVE TOKEN [ITS SET TO NULL WHEN NOT LOGGED IN]
+        //  IT MATCHES THE QUEREY B/C IT FINDS A OBJECT WITH THE STORE NAME AND TOKEN=NULL
+        //Storeline.count({ $and: [{store: req.body.store}, {line:req.body.line}]}   )
+
+          Store.find( {store: data.store, Adminpassword: data.Adminpassword})
+            .exec(function(err, posts) {
+              if (err) { return next(err) }
+          callback(posts);  console.log(posts);
+        //Either passes no data back: store that doesn't have Adminpassword or passes store with Adminpassword
+            })
+        } else{
+          console.log("Adminpassword was equal to undefined so query did not run!");
+        }
+      })
+
 
 });
 
+
+/*---------- STORENAME FUNCTION: --------------*/
+//curl -X POST  http://localhost:8100/storeName
+/*
+
+
+app.post('/checkLineAdmin', function (req, res, next) {
+  var bob = req.body.store;    var bob2 = req.body.Adminpassword;
+  console.log("Store: "+ bob);  console.log("Admin: "+ bob2);
+
+  if(bob2 !== undefined) {
+  //  Store.find( {store: req.body.store}).where({Adminpassword: bob})
+  //  THIS WORKS, ITS JUST THAT WHEN YOU DONT HAVE TOKEN [ITS SET TO NULL WHEN NOT LOGGED IN]
+  //  IT MATCHES THE QUEREY B/C IT FINDS A OBJECT WITH THE STORE NAME AND TOKEN=NULL
+  //Storeline.count({ $and: [{store: req.body.store}, {line:req.body.line}]}   )
+
+    Store.find( {store: req.body.store, Adminpassword: req.body.Adminpassword})
+      .exec(function(err, posts) {
+        if (err) { return next(err) }
+      res.send(posts);  console.log(posts);
+  //Either passes no data back: store that doesn't have Adminpassword or passes store with Adminpassword
+      })
+  } else{
+    console.log("Adminpassword was equal to undefined so query did not run!");
+  }
+})
+
+
+
+//curl -X POST  http://localhost:3000/addLine1
+
+app.post('/addLine1', function (req, res, next) {
+  console.log("number sent to DB: " + req.body.line);
+  console.log("token: " + req.body.Adminpassword);
+
+        Storeline.count({ $and: [{store: req.body.store}, {line:req.body.line}]}   )
+          .exec(function(err, count) {
+              if (err) { return next(err) }
+
+           console.log( "Number of users:", count );
+          if (count == 1) {
+            console.log('fcn ended b/c its in table');
+        } else {
+
+            var storeline = new Storeline({
+            store: req.body.store, line: req.body.line,
+            Adminpassword: req.body.Adminpassword   })
+
+            storeline.save(function (err, post) {
+              if (err) { return next(err) }
+              res.send(post)
+        })
+      }
+  })
+})
+
+
+
+app.post('/numberofLines', function (req, res, next) {
+  Storeline.find({store: req.body.store}, function( err, count){
+      console.log( "Number of users:", count );   res.send(count)
+    })
+})
+
+  app.post('/deleteStore44', function (req, res, next) {
+    //DELETE FUNCTION:
+    console.log("store: " + req.body.store);
+    Store.remove({store: req.body.store}, function(err,removed) {
+        Store.find().exec(function(err, posts) {
+          if (err) { return next(err) }
+          res.send(posts);      console.log(posts);
+        })
+      });
+    });
+
+
+app.post('/deleteselectedStore', function (req, res, next) {
+  Store.remove({store: req.body.store}, function(err,removed) {
+      Store.find().exec(function(err, posts) {
+        if (err) { return next(err) }
+        res.send(posts);      console.log(posts);
+      })
+  });
+})
+
+app.post('/addStore', function (req, res, next) {
+    var store = new Store({
+    store: req.body.store,  postal: req.body.postal,
+    latitude: req.body.latitude, longitude: req.body.longitude,
+    Adminpassword: req.body.Adminpassword  })
+
+    store.save(function (err, post) {
+      if (err) { return next(err) }
+     res.json(201, post)
+     console.log(post);
+  })
+})
+
+
+
+app.post('/storeName', function (req, res, next) {
+    Store.find( {postal: req.body.postal})
+      .exec(function(err, posts) {
+        if (err) { return next(err) }
+           var black = JSON.stringify(posts);
+
+      res.send(posts)
+      console.log(black ); console.log(posts );
+
+      })
+})
+
+
+app.post('/storenameSearch', function (req, res, next) {
+    Store.find( {store: req.body.store})
+      .exec(function(err, posts) {
+        if (err) { return next(err) }
+    res.send(posts); console.log(posts );
+      })
+})
+
+
+
+socket.on('echoinformation3', function (data) {
+     console.log('Data Sent');
+
+ var newMsg = new Post({username: 'data.username', body: 'data.body'});
+ newMsg.save(function(err){
+   if(err) throw err;
+     console.log("posts worek");
+               //io.emit('echo3', black);
+ });
+             io.emit('echo3');
+
+ });
+
+*/
 
 
 

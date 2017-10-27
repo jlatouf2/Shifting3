@@ -203,15 +203,6 @@ console.log('worked');
 
 .controller('storeNamesCtrl', function($scope, $location, $http, $timeout, $rootScope, $ionicModal, AuthService) {
 
-  $scope.facebookLogin = function() {
-      $cordovaOauth.facebook("506464429730479", ["email"])
-      .then(function(result) {
-          // results
-      }, function(error) {
-          // error
-      });
-    }
-
           /*
           AIzaSyALwS3F_V2K6Oq1q8v5-9zxUHfrvfknTEM
 
@@ -278,14 +269,33 @@ console.log('worked');
           $scope.modal2.show();
           },0)
 
-          $http.post('http://192.168.1.115:3000/storeName', {postal: $scope.postal }).success(function( data)
-               {
-                 $scope.numberLinesZero = false;
-                 console.log("Data is returned: " + data);
-                 $scope.countries = data;
-               }, function(posts) {});
+/*
+    $http.post('http://192.168.1.115:3000/storeName', {postal: $scope.postal }).success(function( data)
+         {
+           $scope.numberLinesZero = false;
+           console.log("Data is returned: " + data);
+           $scope.countries = data;
+         }, function(posts) {});
 
 
+         $scope.emitACK = function () {
+                  console.log('socket1');
+             socket.emit('echo-ack', $scope.dataToSend, function (data) {
+         console.log("This is data: "+data);
+             //    $scope.serverResponseACK = data;
+             });
+             $scope.dataToSend = '';
+         };
+
+*/
+
+socket.emit('storeName', {postal: $scope.postal },function (data) {
+    console.log(data);
+    console.log(data[0].store);
+  $scope.numberLinesZero = false;
+
+    $scope.countries = data;
+});
 
 
 
@@ -315,12 +325,6 @@ console.log('worked');
           };
 
 
-          $http.post('/storeName', {postal: $scope.postal }).success(function( data)
-               {
-                 $scope.numberLinesZero = false;
-                 console.log("Data is returned: " + data);
-                 $scope.countries = data;
-               }, function(posts) {});
 //http://localhost:5000
 /*
 $http.post('storeName', {postal: $scope.postal }).success(function( data)
@@ -365,22 +369,43 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
 
           /*   --------GETS STORES-----------     */
           function getStoreNamesAfterCoordinates () {
+            /*
             $http.post('/storeName', {postal: $scope.postal }).success(function( data)
                  {
                    $scope.numberLinesZero = false;
                    console.log("Data is returned: " + data);
                    $scope.countries = data;
                  }, function(posts) {});
+                 */
+
+                 socket.emit('storeName', {postal: $scope.postal },function (data) {
+                     console.log(data);
+                     console.log(data[0].store);
+                   $scope.numberLinesZero = false;
+
+                     $scope.countries = data;
+                 });
+
+
 
             };
 
             /*   --------SEARCHES STORES-----------     */
           $scope.searchStores = function(){
+            /*
             $http.post('/storenameSearch', {store: $scope.storesearchName }).success(function( data)
                  {
              console.log("Data is returned: " + data);
              $scope.countries = data;
                 }, function(posts) {});
+*/
+
+                socket.emit('storenameSearch',  {store: $scope.storesearchName },function (data) {
+                  console.log("Data is returned: " + data);
+                    $scope.countries = data;
+                });
+
+
             }
 
 
@@ -400,32 +425,40 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
               $scope.fname = {fname1 : "Jarred"};
               $scope.lname = {lname1 : "Latouf"};
 
+
+
               /*   --------ADDS STORE TO DB-----------     */
             $scope.addStore1 = function(name){
-            //  $scope.usertoken = 1;
+                console.log('storeName: '+ $scope.storeName.sname);
+                  console.log($scope.postal); console.log($scope.storeName);
+                  console.log($scope.latitude); console.log($scope.longitude);
+                  console.log("UserToken: "+ $scope.usertoken );
 
-            console.log('storeName: '+ $scope.storeName.sname);
-              console.log($scope.postal); console.log($scope.storeName);
-              console.log($scope.latitude); console.log($scope.longitude);
-              console.log("UserToken: "+ $scope.usertoken );
-
-              if ( $scope.storeName.sname == undefined) {
-                console.log('Please enter a name');
-                  } else{
-                    $http.post('/addStore', {store : $scope.storeName.sname, postal: $scope.postal, latitude: $scope.latitude,
-                      longitude: $scope.longitude, Adminpassword: $scope.usertoken }).success(function( data)
-                   {
-                     console.log("Data is returned: " + data);
+                  if ( $scope.storeName.sname == undefined) {
+                    console.log('Please enter a name');
+                      } else{
+                        /*   $http.post('/addStore', {store : $scope.storeName.sname, postal: $scope.postal, latitude: $scope.latitude,
+                          longitude: $scope.longitude, Adminpassword: $scope.usertoken }).success(function( data)
+                       {
+                         console.log("Data is returned: " + data);
+                            $rootScope.successful = true;
+                            console.log($scope.successful);
+                      $scope.countries.push(data)
+                    $scope.storeName.sname = '';
+                    setTimeout(function(){ stopSuccessBar(); }, 3000);
+                     }, function(posts) {});  */
+                      socket.emit('addStore',  {store : $scope.storeName.sname, postal: $scope.postal, latitude: $scope.latitude,
+                        longitude: $scope.longitude, Adminpassword: $scope.usertoken },function (data) {
+                        console.log(data.store);
                         $rootScope.successful = true;
-                        console.log($scope.successful);
-                  $scope.countries.push(data)
-                $scope.storeName.sname = '';
-                setTimeout(function(){ stopSuccessBar(); }, 3000);
-
-                 }, function(posts) {});
-               }
-
+                           console.log($scope.successful);
+                           $scope.countries.push(data)
+                       $scope.storeName.sname = '';
+                        setTimeout(function(){ stopSuccessBar(); }, 3000);
+                      });
+                   }
               }
+
 
 
               /*   --------TIMEOUT FCN-----------     */
@@ -534,12 +567,21 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
                 console.log("name is: "+name);
                 $scope.storeName2 = name;
                 console.log($scope.storeName2);
+
+                /*
               $http.post('/deleteselectedStore', {store : $scope.storeName2 }).success(function( data)
                {
                  console.log("Data is returned: " + data);
                   $scope.countries = data;
 
              }, function(posts) {});
+             */
+
+             socket.emit('deleteselectedStore',  {store:  $scope.storeName2  },function (data) {
+               console.log(data);
+                 $scope.countries = data;
+             });
+
 
           };
 
@@ -550,13 +592,19 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
               console.log("name is: "+name);
               $scope.storeName2 = name;
               console.log($scope.storeName2);
-
+          /*
               $http.post('/deleteStore44', {store : name, Adminpassword: $scope.usertoken }).success(function( data)
                  {
                    console.log(data);
                    $scope.countries = data;
 
                }, function(posts) {});
+          */
+               socket.emit('deleteStore44',  {store:  $scope.storeName2  },function (data) {
+                 console.log(data);
+                   $scope.countries = data;
+               });
+
 
         };
 
@@ -753,18 +801,32 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
   console.log($scope.grabStorename);
 
   /*   --------GET A STORE TYPE WITH LINE IN IT-----------     */
+/*
+    $http.post('/numberofLines', {store: $scope.grabStorename}).success(function( data)
+     {  console.log("Data isreturned: " + data);  console.log(data.length);
+      $rootScope.numberLines= data.length; $scope.countries = data;
 
-  $http.post('/numberofLines', {store: $scope.grabStorename}).success(function( data)
-   {  console.log("Data isreturned: " + data);  console.log(data.length);
-    $rootScope.numberLines= data.length; $scope.countries = data;
+       //THIS WILL ALLOW THE TABLE TO BE EMPTY
+       if ($scope.numberLines == 0) {
+         $rootScope.numberLinesZero = true; console.log('data length is 0');
+       } else if($scope.numberLines > 0) {
+         $rootScope.numberLinesZero = false;
+       }
+     }, function(posts) {});
+*/
 
-     //THIS WILL ALLOW THE TABLE TO BE EMPTY
-     if ($scope.numberLines == 0) {
-       $rootScope.numberLinesZero = true; console.log('data length is 0');
-     } else if($scope.numberLines > 0) {
-       $rootScope.numberLinesZero = false;
-     }
-   }, function(posts) {});
+socket.emit('numberofLines',  {store:  $scope.grabStorename  },function (data) {
+  console.log(data); console.log(data.length);
+$rootScope.numberLines= data.length; $scope.countries = data;
+
+//THIS WILL ALLOW THE TABLE TO BE EMPTY
+if ($scope.numberLines == 0) {
+  $rootScope.numberLinesZero = true; console.log('data length is 0');
+} else if($scope.numberLines > 0) {
+  $rootScope.numberLinesZero = false;
+}
+
+});
 
 
 
@@ -805,6 +867,7 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
            if ( $scope.grabStorename == undefined) {
              console.log('Please get store name!');
                } else{
+                 /*
                  $http.post('/addLine1', {store : $scope.grabStorename, line: $scope.addNumberDB, Adminpassword: $scope.usertoken })
                  .success(function( data)
                 {
@@ -815,7 +878,15 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
                   setTimeout(function(){ stopSuccessBar(); }, 3000);
 
               }, function(posts) {});
-            }
+*/
+              socket.emit('addLine1',  {store : $scope.grabStorename, line: $scope.addNumberDB, Adminpassword: $scope.usertoken },function (data) {
+                console.log(data);
+                //    THIS ADD SUCCESS BAR:
+                $rootScope.successful = true;
+                $scope.countries.push(data)
+              setTimeout(function(){ stopSuccessBar(); }, 3000);
+              });
+             }
        }
 
        /*   --------TIMEOUT-----------     */
@@ -829,11 +900,18 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
           console.log("line is: "+name);
           console.log("store name: "+ $scope.grabStorename);
       //    $http.post('/deleteselectedLine', {line : name }).success(function( data)
+      /*
           $http.post('/deleteselectedLine', {line : name, store: $scope.grabStorename}).success(function( data)
 
          {
            console.log(data);    $scope.countries = data;
            }, function(posts) {});
+           */
+
+           socket.emit('deleteselectedLine',  {line : name, store: $scope.grabStorename},function (data) {
+            console.log(data);    $scope.countries = data;
+           });
+
         };
 
 
@@ -842,11 +920,19 @@ $http.post('storeName', {postal: $scope.postal }).success(function( data)
   	$scope.checkLineAdminFcn = function(names){
       $rootScope.grabLineNumber = names;
       console.log (" LINE NUMBER: " + $scope.grabLineNumber);
-        $http.post('/checkLineAdmin', {store : $scope.grabStorename, line: $scope.grabLineNumber,
+
+      /*    $http.post('/checkLineAdmin', {store : $scope.grabStorename, line: $scope.grabLineNumber,
           Adminpassword: $scope.usertoken }).success(function( data)
            {
              console.log("Data is returned: " + data);
          }, function(posts) {});
+      */
+        socket.emit('checkLineAdmin',  {store : $scope.grabStorename, line: $scope.grabLineNumber,
+            Adminpassword: $scope.usertoken },function (data) {
+        console.log(data);
+       });
+
+
   		};
 
 

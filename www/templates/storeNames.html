@@ -185,7 +185,19 @@ background-color: #4881ea;  border-style: none; float: right; font-size: 25px; m
 <div ng-show="successful" class="alert alert-success">
   <strong>Success!</strong> Indicates a successful or positive action.
 </div>
+<!--
+<ul ng-repeat="country in countries">
+  <li ng-repeat="(key, val) in country">
+    {{key}}: {{val}}
+  </li>
+</ul>
 
+-->
+<ul>
+  <li ng-repeat="event in events">
+    <a>{{event.store}}</></a>
+  </li>
+</ul>
 
   <!-- STORENAMES TABLE -->
 
@@ -201,7 +213,7 @@ background-color: #4881ea;  border-style: none; float: right; font-size: 25px; m
             <tr ng-hide="numberLinesZero" style="text-align: center;" ng-repeat="country in countries | filter:search | orderBy:'store'">
                 <td>
                   <a  style="background-color:white; border:none"  href="#/app/storelines"   ng-click="grabStuff(country.store)" class="list-group-item active">
-                  <span style="color:black;font-weight: bold;">{{country.store}} <br> {{country.postal}}
+                  <span style="color:black;font-weight: bold;">{{country.store}} <br>
                 </td>
 
                 <td  style="width:80px"  ng-show="deleteButton">
